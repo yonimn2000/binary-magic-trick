@@ -6,11 +6,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{99A99572-E438-4E08-AB55-034ACD98F065}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Magic_Trick</RootNamespace>
-    <AssemblyName>Magic Trick</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>YonatnanMankovich.BinaryMagicTrick</RootNamespace>
+    <AssemblyName>Binary Magic Trick</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -67,6 +68,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -83,6 +85,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Wand.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BinaryMagicTrickCore\BinaryMagicTrickCore.csproj">
+      <Project>{03d705e2-9b6c-4ffa-9447-7326277d6e08}</Project>
+      <Name>BinaryMagicTrickCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

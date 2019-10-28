@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>YonatnanMankovich.BinaryMagicTrick</RootNamespace>
+    <PackageId>YonatnanMankovich.BinaryMagicTrickCore</PackageId>
+    <Authors>Yonatnan Mankovich</Authors>
+    <Product>YonatnanMankovich.BinaryMagicTrick</Product>
+    <Company>Yonatnan Mankovich</Company>
+    <Copyright>© 2019 Yonatnan Mankovich</Copyright>
+    <AssemblyName>YonatnanMankovich.BinaryMagicTrickCore</AssemblyName>
+  </PropertyGroup>
+
+</Project>
