@@ -14,42 +14,33 @@ namespace YonatnanMankovich.BinaryMagicTrick
 
         private void SetBTN_Click(object sender, EventArgs e)
         {
+            Hide();
             Properties.Settings.Default.UpperBound = (int)UpperBoundNUD.Value;
             Properties.Settings.Default.Save();
 
-            BinaryMagicTrickController trickController = new BinaryMagicTrickController(0, (int)UpperBoundNUD.Value);
+            BinaryMagicTrickController trickController = new BinaryMagicTrickController((int)UpperBoundNUD.Value);
 
-            Hide();
-            if (MessageBox.Show("Think of a number between 0 and " + trickController.UpperBound, "",
+            if (MessageBox.Show("Think of a number between 0 and " + trickController.Bound, "",
                 MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.Cancel)
                 Application.Exit();
 
-            while (true)
+            while (trickController.HasNextCard())
             {
                 List<int> cardMembers = trickController.GetNextCardMembers();
-                if (cardMembers == null)
-                    break;
-                switch (MessageBox.Show(string.Join(", ",cardMembers),
-                    $"(Card {trickController.CurrentCardNumber + 1} of {trickController.NumberOfCards}) " +
-                    $"Is your number on the screen?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
-                {
-                    case DialogResult.Yes: trickController.CardHasNumber(); break;
-                    case DialogResult.Cancel: Application.Exit(); break;
-                }
+                DialogResult isThisYourCardDialogResult = MessageBox.Show(string.Join(",\t", cardMembers),
+                    $"(Card {trickController.CurrentCardNumber} of {trickController.NumberOfCards}) " +
+                    $"Is your number on the screen?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (isThisYourCardDialogResult == DialogResult.Yes)
+                    trickController.CardHasNumber();
+                else if(isThisYourCardDialogResult == DialogResult.Cancel)
+                    Application.Exit();
             }
 
-            if (trickController.TheGuessedNumber <= trickController.UpperBound)
-            {
-                if (MessageBox.Show(trickController.TheGuessedNumber.ToString(), "Is this your number?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-                    MessageBox.Show("It is not possible...\nPlease look carefully for your number", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            if (trickController.TheGuessedNumber <= trickController.Bound)
+                MessageBox.Show(trickController.TheGuessedNumber.ToString(), "Your number", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
-                MessageBox.Show("This number does not exist...", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            if (MessageBox.Show("Do you want to play again?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                Show();
-            else
-                Application.Exit();
+                MessageBox.Show("This number is outside the range...", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Show();
         }
 
         private void UpperBoundNUD_KeyDown(object sender, KeyEventArgs e)

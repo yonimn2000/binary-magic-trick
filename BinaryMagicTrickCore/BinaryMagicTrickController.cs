@@ -5,29 +5,27 @@ namespace YonatnanMankovich.BinaryMagicTrickCore
 {
     public class BinaryMagicTrickController
     {
-        public int LowerBound { get; private set; }
-        public int UpperBound { get; private set; }
+        public int Bound { get; private set; }
         public int TheGuessedNumber { get; private set; } = 0;
         public int NumberOfCards { get; private set; }
         public int CurrentCardNumber { get; private set; } = 0;
 
-        public BinaryMagicTrickController(int lowerBound, int upperBound)
+        public BinaryMagicTrickController(int bound)
         {
-            LowerBound = lowerBound;
-            UpperBound = upperBound;
-            NumberOfCards = (int)Math.Ceiling(Math.Log(upperBound + 1, 2));
+            Bound = bound;
+            NumberOfCards = (int)Math.Ceiling(Math.Log(bound + 1, 2));
         }
 
         public List<int> GetNextCardMembers()
         {
-            if (CurrentCardNumber < NumberOfCards)
+            if (HasNextCard())
             {
-                List<int> cardMembers = new List<int>((UpperBound - LowerBound) / 2);
+                List<int> cardMembers = new List<int>(Bound / 2);
                 int firstNumberOnCard = (int)Math.Pow(2, CurrentCardNumber); // AKA 2^CurrentCardNumber
                 int printedNumber = firstNumberOnCard;
-                while (printedNumber <= UpperBound)
+                while (printedNumber <= Bound)
                 {
-                    for (int i = 0; i < firstNumberOnCard && printedNumber <= UpperBound; i++)
+                    for (int i = 0; i < firstNumberOnCard && printedNumber <= Bound; i++)
                     {
                         cardMembers.Add(printedNumber);
                         printedNumber++;
@@ -37,7 +35,12 @@ namespace YonatnanMankovich.BinaryMagicTrickCore
                 CurrentCardNumber++;
                 return cardMembers;
             }
-            return null;
+            throw new Exception("No more cards.");
+        }
+
+        public bool HasNextCard()
+        {
+            return CurrentCardNumber < NumberOfCards;
         }
 
         public void CardHasNumber()
